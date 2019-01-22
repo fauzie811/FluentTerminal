@@ -84,15 +84,15 @@ function createTerminal(options, theme, keyBindings) {
         && keyBinding.shift == e.shiftKey
         && keyBinding.key == e.keyCode) {
         if (document.visibilityState == 'visible') {
-          if (keyBinding.command == 'copy' && term.getSelection() == '') {
+          if (keyBinding.command == 'Copy' && term.getSelection() == '') {
             return true;
           }
-          if (keyBinding.command == 'clear') {
+          if (keyBinding.command == 'Clear') {
             term.clearSelection();
             term.clear();
             return false;
           }
-          if (keyBinding.command == 'selectAll') {
+          if (keyBinding.command == 'SelectAll') {
             term.selectAll();
             return false;
           }
@@ -145,14 +145,16 @@ function changeOptions(options) {
 }
 
 function setScrollBarStyle(scrollBarStyle) {
-  if (scrollBarStyle == 'hidden') {
-    document.getElementById('terminal-container').style['-ms-overflow-style'] = 'none';
-  } else if (scrollBarStyle == 'autoHiding') {
-    document.getElementById('terminal-container').style['-ms-overflow-style'] = '-ms-autohiding-scrollbar';
-  } else if (scrollBarStyle == 'visible') {
-    document.getElementById('terminal-container').style['-ms-overflow-style'] = 'scrollbar';
+  switch (scrollBarStyle) {
+  	case 'hidden':     return terminalContainer.style['-ms-overflow-style'] = 'none';
+  	case 'autoHiding': return terminalContainer.style['-ms-overflow-style'] = '-ms-autohiding-scrollbar';
+  	case 'visible':    return terminalContainer.style['-ms-overflow-style'] = 'scrollbar';
   }
-  
+}
+
+function setPadding(padding) {
+  document.querySelector('.terminal').style.padding = padding + 'px';
+  term.fit();
 }
 
 function setPadding(padding) {
